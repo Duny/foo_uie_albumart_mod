@@ -1,0 +1,137 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
+    </Filter>
+    <Filter Include="foo_unpack_7z_dll Files">
+      <UniqueIdentifier>{3802a19e-1381-4b05-8af3-99a4171f9ee2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="7z">
+      <UniqueIdentifier>{72ab40af-bf48-4120-80e7-05627e1e890d}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="albumart_config.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="albumart_helpers.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="albumart_sources.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="albumart_vars.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="bitmap_file.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="titleformat_helper.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="uie_albumart.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="version_control.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="win32_helpers.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="foo_unpack_7z_dll\archive.cpp">
+      <Filter>foo_unpack_7z_dll Files</Filter>
+    </ClCompile>
+    <ClCompile Include="foo_unpack_7z_dll\dll.cpp">
+      <Filter>foo_unpack_7z_dll Files</Filter>
+    </ClCompile>
+    <ClCompile Include="foo_unpack_7z_dll\file_streams.cpp">
+      <Filter>foo_unpack_7z_dll Files</Filter>
+    </ClCompile>
+	<ClCompile Include="$(SEVENZIPSRC)\CPP\Common\IntToString.cpp">
+      <Filter>7z</Filter>
+    </ClCompile>
+    <ClCompile Include="$(SEVENZIPSRC)\CPP\Common\MyString.cpp">
+      <Filter>7z</Filter>
+    </ClCompile>
+    <ClCompile Include="$(SEVENZIPSRC)\CPP\Windows\PropVariant.cpp">
+      <Filter>7z</Filter>
+    </ClCompile>
+    <ClCompile Include="$(SEVENZIPSRC)\CPP\Windows\PropVariantConversions.cpp">
+      <Filter>7z</Filter>
+    </ClCompile>
+    <ClCompile Include="$(SEVENZIPSRC)\CPP\Common\StringConvert.cpp">
+      <Filter>7z</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="albumart_config.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="albumart_helpers.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="albumart_sources.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="albumart_vars.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="bitmap_file.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="multiline_string.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="titleformat_helper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="uie_albumart.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="version_control.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="win32_helpers.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="playlist_tree_callback.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="foo_unpack_7z_dll\archive.h">
+      <Filter>foo_unpack_7z_dll Files</Filter>
+    </ClInclude>
+    <ClInclude Include="foo_unpack_7z_dll\dll.h">
+      <Filter>foo_unpack_7z_dll Files</Filter>
+    </ClInclude>
+    <ClInclude Include="foo_unpack_7z_dll\extract_callback.h">
+      <Filter>foo_unpack_7z_dll Files</Filter>
+    </ClInclude>
+    <ClInclude Include="foo_unpack_7z_dll\file_streams.h">
+      <Filter>foo_unpack_7z_dll Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="foo_uie_albumart.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+</Project>

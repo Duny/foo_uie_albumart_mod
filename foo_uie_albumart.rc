@@ -1,0 +1,261 @@
+// Microsoft Visual C++ generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// English (U.S.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE 
+BEGIN
+    "\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_EDIT_VIEW DIALOGEX 0, 0, 246, 100
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Edit Source"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,7,79,112,14
+    PUSHBUTTON      "Cancel",IDCANCEL,127,79,112,14
+    EDITTEXT        IDC_VALUE,7,7,232,39,ES_AUTOVSCROLL | ES_MULTILINE
+    LTEXT           "Preview:",IDC_STATIC,7,49,30,8
+    EDITTEXT        IDC_PREVIEW,7,59,232,13,ES_AUTOHSCROLL | ES_READONLY
+END
+
+IDD_COMMAND_SELECT DIALOGEX 0, 0, 246, 38
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Select Command"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,7,20,112,14
+    PUSHBUTTON      "Cancel",IDCANCEL,127,20,112,14
+    COMBOBOX        IDC_COMMAND_VALUE,7,7,232,13,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+END
+
+#if defined(APSTUDIO_INVOKED) || !defined(ASDASDASD)
+IDD_ALBUMART_CONFIG DIALOGEX 0, 0, 320, 376
+STYLE DS_SHELLFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Album Art Panel Preferences"
+FONT 8, "MS Shell Dlg", 0, 0, 0x0
+BEGIN
+    CONTROL         "",IDC_TAB,"SysTabControl32",WS_TABSTOP,3,3,314,250
+    DEFPUSHBUTTON   "OK",IDOK,142,256,40,14
+    PUSHBUTTON      "Cancel",IDCANCEL,187,256,40,14
+    PUSHBUTTON      "Apply",IDC_APPLY,232,256,40,14
+    PUSHBUTTON      "Help",IDC_WIKIHELP,277,256,40,14
+    PUSHBUTTON      "Reset All",IDC_RESET_ALL,7,256,40,14
+END
+#endif
+
+IDD_CONFIG_TAB_DISPLAY DIALOGEX 0, 0, 308, 163
+STYLE DS_SETFONT | WS_CHILD
+EXSTYLE WS_EX_CONTROLPARENT
+FONT 8, "MS Shell Dlg", 400, 0, 0x0
+BEGIN
+    GROUPBOX        "Resizing Options",IDC_STATIC,7,7,294,71
+    CONTROL         "Center album cover art in panel",IDC_Center,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,16,22,126,10
+    CONTROL         "Expand album cover art to fit panel",IDC_Expand,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,16,35,132,10
+    CONTROL         "Shrink album cover art to fit panel",IDC_Shrink,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,170,22,129,10
+    CONTROL         "Maintain aspect ratio",IDC_AspectRatio,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,170,35,83,10
+    LTEXT           "Resizing quality:",IDC_STATIC,16,58,60,8
+    COMBOBOX        IDC_Quality,76,56,59,50,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+
+    GROUPBOX        "Panel Options",IDC_STATIC,7,88,294,71
+    LTEXT           "Minimum panel height:",IDC_STATIC,16,103,73,8
+    EDITTEXT        IDC_MinHeight,111,101,44,12,ES_AUTOHSCROLL | ES_NUMBER
+    CONTROL         "",IDC_MinHeight_Spin,"msctls_updown32",
+                    UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS | UDS_NOTHOUSANDS,156,101,11,12
+    LTEXT           "Minimum panel width:",IDC_STATIC,170,103,73,8
+    EDITTEXT        IDC_MinWidth,260,101,32,12,ES_AUTOHSCROLL | ES_NUMBER
+    CONTROL         "",IDC_MinWidth_Spin,"msctls_updown32",
+                    UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS | UDS_NOTHOUSANDS,293,101,11,12
+    LTEXT           "Padding:",IDC_STATIC,16,121,35,8
+    EDITTEXT        IDC_Padding,111,119,44,12,ES_AUTOHSCROLL | ES_NUMBER
+    CONTROL         "",IDC_Padding_Spin,"msctls_updown32",
+                    UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS | UDS_NOTHOUSANDS,156,119,11,12
+    LTEXT           "Edge style:",IDC_STATIC,16,139,37,8
+    COMBOBOX        IDC_EdgeStyle,111,137,44,50,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+
+    GROUPBOX        "Colors",IDC_STATIC,7,169,294,54
+    CONTROL         "Background:",IDC_EnableBG,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,16,184,87,10
+    CONTROL         "",IDC_BGColor,"Static",SS_NOTIFY | SS_OWNERDRAW | SS_SUNKEN,210,182,20,14
+    PUSHBUTTON      "Change...",IDC_ChooseBG,239,182,53,14
+    CONTROL         "Draw pixel border:",IDC_PixelBorder,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,16,203,97,10
+    CONTROL         "",IDC_BorderColor,"Static",SS_NOTIFY | SS_OWNERDRAW | SS_SUNKEN,210,201,20,14
+    PUSHBUTTON      "Change...",IDC_ChooseBorder,239,201,53,14
+END
+
+#if defined(APSTUDIO_INVOKED) || defined(ASDASDASD)
+#if defined(APSTUDIO_INVOKED)
+IDD_ALBUMART_CONFIG$(ASDASDASD) DIALOGEX 0, 0, 321, 285
+#else
+IDD_ALBUMART_CONFIG DIALOGEX 0, 0, 321, 285
+#endif
+STYLE DS_SETFONT | WS_CHILD
+FONT 8, "Tahoma", 0, 0, 0x0
+BEGIN
+    CONTROL         "Center album cover art in panel",IDC_Center,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,21,17,126,10
+    CONTROL         "Expand album cover art to fit panel",IDC_Expand,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,21,28,132,10
+    CONTROL         "Shrink album cover art to fit panel",IDC_Shrink,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,21,39,129,10
+    LISTBOX         IDC_List,21,177,277,82,LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "Add",IDC_Add,21,264,50,14
+    PUSHBUTTON      "Remove",IDC_Remove,77,264,50,14
+    PUSHBUTTON      "Take Precedence",IDC_Up,133,264,63,14
+    PUSHBUTTON      "Yield Precedence",IDC_Down,202,264,63,14
+    LTEXT           "Sources for album cover art images",IDC_STATIC,21,168,114,8
+    PUSHBUTTON      "Reset",IDC_Reset,271,264,27,14
+    CONTROL         "Album cover art follows cursor even when playing",IDC_Selected,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,21,90,273,10
+    CONTROL         "Use background colour",IDC_UseBG,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,182,17,87,10
+    PUSHBUTTON      "Set",IDC_ChooseBG,275,18,28,10
+    GROUPBOX        "Display",IDC_STATIC,7,7,307,71
+    CONTROL         "Maintain aspect ratio",IDC_AspectRatio,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,182,28,83,10
+    GROUPBOX        "Behavior",IDC_STATIC,7,80,307,86
+    CONTROL         "Draw a pixel border",IDC_PixelBorder,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,182,39,97,10
+    PUSHBUTTON      "Set",IDC_ChooseBorder,275,40,28,10
+    LTEXT           "Left click function",IDC_STATIC,21,114,68,8
+    COMBOBOX        IDC_LftClick,110,112,197,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Middle click function",IDC_STATIC,21,128,64,8
+    COMBOBOX        IDC_MdlClick,110,126,197,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Double click function",IDC_STATIC,21,143,77,8
+    COMBOBOX        IDC_DblClick,110,140,197,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Resizing quality",IDC_STATIC,21,51,60,8
+    COMBOBOX        IDC_Quality,99,49,69,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+//    CONTROL         "Allow external control of cover art display (e.g. by the Album List panel)",IDC_UseControl,
+//                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,21,101,280,10
+    LTEXT           "Minimum panel height",IDC_STATIC,21,65,73,8
+    EDITTEXT        IDC_MinHeight,99,63,40,12,ES_AUTOHSCROLL | ES_NUMBER
+    CONTROL         "",IDC_MinHeight_Spin,"msctls_updown32",
+                    UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS | UDS_NOTHOUSANDS,150,63,9,12
+    CONTROL         "Revert to first source when current source would result in different display",IDC_ResetSource,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,21,101,280,10
+    LTEXT           "Transition time (ms)",IDC_STATIC,184,51,82,9
+    EDITTEXT        IDC_AnimTime,269,49,36,12,ES_AUTOHSCROLL | ES_NUMBER
+    COMBOBOX        IDC_EdgeStyle,236,62,69,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Edge style",IDC_STATIC,184,64,34,8
+END
+#endif
+
+IDD_CONFIG_TAB_BEHAVIOUR DIALOGEX 0, 0, 308, 175
+STYLE DS_SETFONT | WS_CHILD
+EXSTYLE WS_EX_CONTROLPARENT
+FONT 8, "MS Shell Dlg", 400, 0, 0x0
+BEGIN
+    GROUPBOX        "General",IDC_STATIC,7,7,294,116
+    CONTROL         "Album cover art follows cursor even when playing",IDC_Selected,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,16,22,273,10
+    CONTROL         "Enable fading transition",IDC_EnableAnim,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,16,38,100,8
+    LTEXT           "Transition time (ms):",IDC_ANIMTIME_CAPTION,165,38,82,8
+    EDITTEXT        IDC_AnimTime,248,36,44,12,ES_AUTOHSCROLL | ES_NUMBER | WS_TABSTOP
+    CONTROL         "",IDC_AnimTime_Spin,"msctls_updown32",
+                    UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS | UDS_NOTHOUSANDS,159,36,11,12
+    CONTROL         "Cycle sources during playback",IDC_EnableCycle,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,16,54,130,8
+    LTEXT           "Cycle time (s):",IDC_CYCLETIME_CAPTION,165,54,75,8
+    EDITTEXT        IDC_CycleTime,248,52,44,12,ES_AUTOHSCROLL | ES_NUMBER | WS_TABSTOP
+    CONTROL         "",IDC_CycleTime_Spin,"msctls_updown32",
+                    UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS | UDS_NOTHOUSANDS,159,52,11,12
+    CONTROL         "Skip no-cover images while cycling",IDC_SKIP_NOCOVERS,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,32,69,130,8
+    CONTROL         "Cycle all wildcard matches",IDC_CYCLE_WILDCARDS,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,16,84,100,8
+    LTEXT           "Order:",IDC_ORDER_CAPTION,165,84,32,8
+    CONTROL         "Alphabetical",IDC_WILDCARD_ALPHA,"Button",BS_AUTORADIOBUTTON | WS_TABSTOP | WS_GROUP,194,84,50,8
+    CONTROL         "Random",IDC_WILDCARD_RANDOM,"Button",BS_AUTORADIOBUTTON,254,84,38,8
+    LTEXT           "On track change, revert to first source:",IDC_STATIC,16,103,130,8
+    COMBOBOX        IDC_ResetSource,182,101,110,50,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+
+    GROUPBOX        "Mouse Functions",IDC_STATIC,7,140,294,71
+    LTEXT           "Left click function:",IDC_STATIC,16,155,68,8
+    COMBOBOX        IDC_LftClick,113,153,179,50,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Middle click function:",IDC_STATIC,16,173,77,8
+    COMBOBOX        IDC_MdlClick,113,171,179,50,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Double click function:",IDC_STATIC,16,191,77,8
+    COMBOBOX        IDC_DblClick,113,189,179,50,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+END
+
+IDD_CONFIG_TAB_SOURCES DIALOGEX 0, 0, 308, 157
+STYLE DS_SETFONT | WS_CHILD
+EXSTYLE WS_EX_CONTROLPARENT
+FONT 8, "MS Shell Dlg", 400, 0, 0x0
+BEGIN
+    GROUPBOX        "Sources for album cover art images",IDC_STATIC,7,7,294,125
+    LISTBOX         IDC_List,16,22,276,72,LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Double-click a source to edit it",IDC_STATIC,16,96,110,8
+    PUSHBUTTON      "Add",IDC_Add,16,110,44,14
+    PUSHBUTTON      "Remove",IDC_Remove,67,110,50,14
+    PUSHBUTTON      "Move Up",IDC_Up,124,110,59,14
+    PUSHBUTTON      "Move Down",IDC_Down,190,110,59,14
+    PUSHBUTTON      "Reset",IDC_Reset,256,110,36,14
+
+    GROUPBOX        "History",IDC_STATIC,7,143,294,32
+    CONTROL         "Save results from past",IDC_HISTORY_ENABLE,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,16,158,82,10
+    EDITTEXT        IDC_HISTORY_SIZE,100,156,25,12,ES_AUTOHSCROLL | ES_NUMBER | WS_TABSTOP
+    CONTROL         "",IDC_HISTORY_SPIN,"msctls_updown32",
+                    UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS | UDS_NOTHOUSANDS,120,156,11,12
+    LTEXT           "searches",IDC_HISTORY_LABEL,130,158,50,10
+
+    GROUPBOX        "Import and Export Sources List",IDC_STATIC,7,185,135,37
+    PUSHBUTTON      "Import...",IDC_IMPORT,16,200,55,14
+    PUSHBUTTON      "Export...",IDC_EXPORT,78,200,55,14
+
+    GROUPBOX        "Debugging",IDC_STATIC,150,185,151,37
+    CONTROL         "Output debugging information to console",IDC_DEBUG_LOG_SOURCES,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,157,202,140,10
+END
+
+#endif    // English (U.S.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+
