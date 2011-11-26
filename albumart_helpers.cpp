@@ -151,9 +151,11 @@ static void findArchiveImageMatch_internal(pfc::list_t<pfc::string8> & p_path_ou
 
     if (wildcard_helper::has_wildcards (p_pattern))
 	{
+        pfc::string8_fast p_file, p_archive;
         auto p_callback = [&] (archive * owner, const char * url, const t_filestats & p_stats, const file_ptr & p_reader) -> bool
         {
-            if (wildcard_helper::test (url, file_path))
+            archive_impl::g_parse_unpack_path (url, p_archive, p_file);
+            if (wildcard_helper::test (p_file, file_path))
                 p_path_out.add_item (url);
             return true;
         };
@@ -161,14 +163,13 @@ static void findArchiveImageMatch_internal(pfc::list_t<pfc::string8> & p_path_ou
 
 		service_enum_t<filesystem> e;
 		service_ptr_t<filesystem> f;
-		while(e.next(f)) {
+		while (e.next (f)) {
 			service_ptr_t<archive> arch;
 			if (f->service_query_t (arch)) {
 				try {
 					arch->archive_list (archive_path, file_ptr (), archive_callback_helper (p_callback), false);
 					return;
-				} catch(exception_aborted) {throw;} 
-				catch(...) {}
+				} catch (...) {}
 			}
 		} 
     }
