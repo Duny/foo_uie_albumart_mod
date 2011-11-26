@@ -9,8 +9,8 @@ public:
     uie_albumart();
 
     virtual const GUID & get_extension_guid() const {return albumart_guid;}
-    virtual void get_name(string_base & out) const { out = "Album Art"; }
-    virtual void get_category(string_base & out) const {out = "Panels";    }
+    virtual void get_name(pfc::string_base & out) const { out = "Album Art"; }
+    virtual void get_category(pfc::string_base & out) const {out = "Panels";    }
     virtual void get_menu_items (uie::menu_hook_t & p_hook);
 
     virtual bool have_config_popup() const {return true;}
@@ -32,8 +32,8 @@ public:
     void paint(HDC hdc);
     void redraw();
 
-    void get_config_vars(albumart_vars & p_config, list_t<string8> & p_src_list);
-    void set_config_vars(unsigned int change_type, albumart_vars & p_config, list_t<string8> & p_src_list);
+    void get_config_vars(albumart_vars & p_config, pfc::list_t<pfc::string8> & p_src_list);
+    void set_config_vars(unsigned int change_type, albumart_vars & p_config, pfc::list_t<pfc::string8> & p_src_list);
 
     void click_func(mouse_function func);
 
@@ -47,14 +47,14 @@ protected:
 
     // albumart configuration
     albumart_vars m_config;
-    list_t<string8> m_sources;
+    pfc::list_t<pfc::string8> m_sources;
     bool m_config_changed;
 
-    rcptr_t<Bitmap> m_bmp;
-    rcptr_t<Bitmap> m_bmpnew;   // should be empty unless new image needs to be drawn
-    string8 m_path;
+    pfc::rcptr_t<Bitmap> m_bmp;
+    pfc::rcptr_t<Bitmap> m_bmpnew;   // should be empty unless new image needs to be drawn
+    pfc::string8 m_path;
     bool m_image_file_exists;
-    ptrholder_t<Bitmap> m_bufnew, m_bufold, m_bufanim;
+    pfc::ptrholder_t<Bitmap> m_bufnew, m_bufold, m_bufanim;
     bool m_animating;
     DWORD m_animstarted,m_animshouldstart;
     bool b_dblclick;

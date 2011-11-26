@@ -1,18 +1,20 @@
 #ifndef __FOO_UIE_ALBUMART__STDAFX_H__
 #define __FOO_UIE_ALBUMART__STDAFX_H__
 
-#include "foobar2000\SDK\foobar2000.h"
-#include "foobar2000\helpers\helpers.h"
+#define COMPONENT_NAME "foo_uie_albumart_mod"
+
+// foobar includes
+#include "foobar2000/ATLHelpers/ATLHelpers.h"
+// columns ui sdk
 #include "ui_extension.h"
 
-using namespace pfc;
+// Boost library
+#include "boost/function.hpp"
 
 // 7-zip includes
 #include "Common\MyInitGuid.h"
 #include "Common\MyCom.h"
 #include "7zip\Archive\IArchive.h"
-
-#define COMPONENT_NAME "foo_uie_albumart_mod"
 
 #include "afxres.H"
 

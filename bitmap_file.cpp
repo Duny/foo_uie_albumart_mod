@@ -56,13 +56,13 @@ bool bitmap_file::set_file(service_ptr_t<file> & p_source)
 
 bool bitmap_file::is_bitmap()
 {
-    rcptr_t<Bitmap> bmp;
+    pfc::rcptr_t<Bitmap> bmp;
     return get_gdiplus_bitmap(bmp);
 }
 
 bool bitmap_file::get_gdi_bitmap(HBITMAP & p_bmp_out)
 {
-    rcptr_t<Bitmap> bmp;
+    pfc::rcptr_t<Bitmap> bmp;
     bool success = false;
     HBITMAP hBmp = NULL;
 
@@ -80,7 +80,7 @@ bool bitmap_file::get_gdi_bitmap(HBITMAP & p_bmp_out)
     return success;
 }
 
-bool bitmap_file::get_gdiplus_bitmap(rcptr_t<Bitmap> & p_bmp_out)
+bool bitmap_file::get_gdiplus_bitmap(pfc::rcptr_t<Bitmap> & p_bmp_out)
 {
     if (m_bitmap.is_valid())
     {
@@ -127,7 +127,7 @@ bool bitmap_file::get_gdiplus_bitmap(rcptr_t<Bitmap> & p_bmp_out)
     }
 }
 
-bool bitmap_file::get_gdiplus_bitmap_from_album_art_data (album_art_data_ptr & pic, rcptr_t<Bitmap> & p_bmp_out)
+bool bitmap_file::get_gdiplus_bitmap_from_album_art_data (album_art_data_ptr & pic, pfc::rcptr_t<Bitmap> & p_bmp_out)
 {
     if (m_bitmap.is_valid())
     {

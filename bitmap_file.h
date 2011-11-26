@@ -25,14 +25,14 @@ public:
 
     bool is_bitmap();
     bool get_gdi_bitmap(HBITMAP & p_bmp_out);
-    bool get_gdiplus_bitmap(rcptr_t<Bitmap> & p_bmp_out);
-    bool get_gdiplus_bitmap_from_album_art_data (album_art_data_ptr & pic, rcptr_t<Bitmap> & p_bmp_out);
+    bool get_gdiplus_bitmap(pfc::rcptr_t<Bitmap> & p_bmp_out);
+    bool get_gdiplus_bitmap_from_album_art_data (album_art_data_ptr & pic, pfc::rcptr_t<Bitmap> & p_bmp_out);
     void release_bitmap();
 
 protected:
     service_ptr_t<file> m_file;
     album_art_data_ptr album_art_embedded;
-    rcptr_t<Bitmap> m_bitmap;
+    pfc::rcptr_t<Bitmap> m_bitmap;
     IStream * m_bitmap_stream;
 };
 

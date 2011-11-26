@@ -30,7 +30,7 @@ enum edgestyle : int
 
 extern DWORD exstyle_from_config(edgestyle edge_style);
 
-extern bool GUIDtoExt (GUID &guid, string_base & p_out);
+extern bool GUIDtoExt (GUID &guid, pfc::string_base & p_out);
 
 // reset sources and resize quality declarations
 enum reset_option : int
@@ -107,6 +107,6 @@ struct albumart_vars
 };
 
 // used to reset config variables
-extern void reset_config_vars(albumart_vars & p_config, list_t<string8> & p_src_list);
+extern void reset_config_vars(albumart_vars & p_config, pfc::list_t<pfc::string8> & p_src_list);
 
 #endif

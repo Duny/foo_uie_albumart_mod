@@ -19,7 +19,7 @@ public:
     //! @param p_replacement_char UTF-8 character
     titleformat_text_filter_impl_reserved_chars_ex(const char * p_reserved_chars, unsigned p_replacement_char);
 
-    virtual void write(const GUID & p_inputtype, string_receiver & p_out, const char * p_data, t_size p_data_length);
+    virtual void write(const GUID & p_inputtype, pfc::string_receiver & p_out, const char * p_data, t_size p_data_length);
 private:
     struct replace_entry
     {
@@ -29,10 +29,10 @@ private:
         replace_entry(const replace_entry & p_source) : m_from(p_source.m_from), m_to(p_source.m_to) {}
         replace_entry(unsigned p_from, unsigned p_to) : m_from(p_from), m_to(p_to) {}
     };
-    array_hybrid_t<replace_entry, 8> m_entries;
+    pfc::array_hybrid_t<replace_entry, 8> m_entries;
 
     bool test_for_replacement_char(unsigned c1, unsigned * c2) const;
-    void replace_forbidden_chars(string_receiver & p_out, const char * p_source, t_size p_source_len) const;
+    void replace_forbidden_chars(pfc::string_receiver & p_out, const char * p_source, t_size p_source_len) const;
 };
 
 #endif

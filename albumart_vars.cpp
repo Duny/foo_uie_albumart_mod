@@ -25,7 +25,7 @@ inline t_size get_defsrclist_count()
 
 inline const char * get_def_source(t_size p_index)
 {
-    dynamic_assert(p_index < tabsize(def_src_list));
+    pfc::dynamic_assert(p_index < tabsize(def_src_list));
 
     return def_src_list[p_index];
 }
@@ -52,12 +52,12 @@ inline t_size get_function_count()
 
 inline const char * get_function_name(t_size p_index)
 {
-    dynamic_assert(p_index < tabsize(func_name));
+    pfc::dynamic_assert(p_index < tabsize(func_name));
 
     return func_name[p_index];
 }
 
-inline bool GUIDtoExt (GUID &guid, string_base & p_out)
+inline bool GUIDtoExt (GUID &guid, pfc::string_base & p_out)
 {
     p_out.reset ();
     if (guid == ImageFormatJPEG)
@@ -74,7 +74,7 @@ inline bool GUIDtoExt (GUID &guid, string_base & p_out)
 }
 
 // sets p_config and p_src_list to default values
-void reset_config_vars(albumart_vars & p_config, list_t<string8> & p_src_list)
+void reset_config_vars(albumart_vars & p_config, pfc::list_t<pfc::string8> & p_src_list)
 {
     // configuration defaults
     p_config.last_tab = 0;

@@ -1,6 +1,6 @@
 #include "stdafx.h"
 
-const string8 sources_control::m_embedded_image_search_pattern = "<embedded image>";
+const pfc::string8 sources_control::m_embedded_image_search_pattern = "<embedded image>";
 
 const GUID* sources_control::m_cover_ids[] = { 
     &album_art_ids::cover_front,
@@ -11,18 +11,18 @@ const GUID* sources_control::m_cover_ids[] = {
 };
 const t_size sources_control::m_num_covers = tabsize (sources_control::m_cover_ids);
 
-const string8 sources_control::m_cover_types[] = { "Front", "Back", "Disc", "Icon", "Artist" };
+const pfc::string8 sources_control::m_cover_types[] = { "Front", "Back", "Disc", "Icon", "Artist" };
 
 // this class mostly controls the sources list and cycling through various sources.
 // The functions which actually try to match one or more images with a source pattern
 // are found in albumart_helpers.cpp
 
-void sources_control::setup_sources_control(albumart_vars & p_config, list_t<string8> & p_sources)
+void sources_control::setup_sources_control(albumart_vars & p_config, pfc::list_t<pfc::string8> & p_sources)
 {
     m_config = p_config;
     m_sources = p_sources;
 
-    string8 temp;
+    pfc::string8 temp;
     temp.reset();
     m_src_matches.remove_all();
     m_src_matches.add_item(temp);
@@ -61,7 +61,7 @@ void sources_control::setup_sources_control(albumart_vars & p_config, list_t<str
 
 sources_control::~sources_control()
 {
-    dynamic_assert(m_callback==NULL, "Sources control callback registered");
+    pfc::dynamic_assert(m_callback==NULL, "Sources control callback registered");
     m_selected_track = m_playing_track = NULL;
 }
 
@@ -138,8 +138,8 @@ t_size sources_control::next_source()
         // use helper function to search for a valid source
         // loops forward until a match is found
         t_size found_source;
-        string8 pattern;
-        list_t<string8> matches;
+        pfc::string8 pattern;
+        pfc::list_t<pfc::string8> matches;
         metadb_handle_ptr track;
         get_displayed_track(track);
 
@@ -206,8 +206,8 @@ t_size sources_control::previous_source()
                 else
                 // we're in the same group
                 {
-                    list_t<string8> matches;
-                    string8 pattern;
+                    pfc::list_t<pfc::string8> matches;
+                    pfc::string8 pattern;
 
                     // test for an image match
                     // we don't want to use the find_and_set_image functions
@@ -236,7 +236,7 @@ t_size sources_control::previous_source()
 // source in the list (index 0), whichever comes first
 t_size sources_control::get_first_in_group(t_size p_start_source) const
 {
-    dynamic_assert((p_start_source < m_sources.get_count()) && (p_start_source >= 0));
+    pfc::dynamic_assert((p_start_source < m_sources.get_count()) && (p_start_source >= 0));
 
     t_size source_index;
 
@@ -261,7 +261,7 @@ t_size sources_control::get_next_group(t_size p_start_source) const
 {
     t_size source_count = m_sources.get_count();
 
-    dynamic_assert((p_start_source < source_count) && (p_start_source >= 0));
+    pfc::dynamic_assert((p_start_source < source_count) && (p_start_source >= 0));
 
     t_size n;
     // start with next source and avoid current one
@@ -287,7 +287,7 @@ t_size sources_control::get_prev_group(t_size p_start_source) const
 {
     t_size source_count = m_sources.get_count();
 
-    dynamic_assert((p_start_source < source_count) && (p_start_source >= 0));
+    pfc::dynamic_assert((p_start_source < source_count) && (p_start_source >= 0));
 
     // to ignore sources prefixed with "-" while still in same group
     // as start source
@@ -331,7 +331,7 @@ t_size sources_control::get_next_nocover(t_size p_start_source) const
 {
     t_size source_count = m_sources.get_count();
 
-    dynamic_assert((p_start_source < source_count) && (p_start_source >= 0));
+    pfc::dynamic_assert((p_start_source < source_count) && (p_start_source >= 0));
 
     t_size n;
     for (n = 0; n < source_count; n++)
@@ -349,7 +349,7 @@ t_size sources_control::get_next_nocover(t_size p_start_source) const
 
 void sources_control::set_current_source(t_size p_index)
 {
-    dynamic_assert((p_index >= 0) && (p_index < m_sources.get_count()));
+    pfc::dynamic_assert((p_index >= 0) && (p_index < m_sources.get_count()));
 
 	if ((m_current_source == p_index) && (p_index == 0))
 		m_current_src_match = 0;
@@ -385,7 +385,7 @@ inline void sources_control::set_max_history(bool p_enabled, t_size p_max = 0)
 // Also starts appropriate animation timers
 //
 // NOTE: p_matches may be modified by this function
-void sources_control::set_matches(list_t<string8> & p_matches, const char * p_pattern, t_size p_index)
+void sources_control::set_matches(pfc::list_t<pfc::string8> & p_matches, const char * p_pattern, t_size p_index)
 {
     // save the pattern that generated the search results p_matches
     m_pattern_history.add_entry(p_pattern, p_matches);
@@ -393,7 +393,7 @@ void sources_control::set_matches(list_t<string8> & p_matches, const char * p_pa
     // make sure we have at least one item in p_matches
     if (p_matches.get_count() == 0)
     {
-        string8 temp;
+        pfc::string8 temp;
         temp.reset();
         p_matches.add_item(temp);
     }
@@ -440,7 +440,7 @@ void sources_control::set_matches(list_t<string8> & p_matches, const char * p_pa
 // loads the image match at p_index
 void sources_control::set_current_match(t_size p_index)
 {
-    dynamic_assert(p_index < m_src_matches.get_count());
+    pfc::dynamic_assert(p_index < m_src_matches.get_count());
 
     m_current_src_match = p_index;
 
@@ -449,10 +449,10 @@ void sources_control::set_current_match(t_size p_index)
         m_callback->on_sources_control_new_image();
 }
 
-bool sources_control::get_current_bitmap(rcptr_t<Bitmap> & p_bmp)
+bool sources_control::get_current_bitmap(pfc::rcptr_t<Bitmap> & p_bmp)
 {
     abort_callback_impl abort;
-    string8 path = m_src_matches[m_current_src_match];
+    pfc::string8 path = m_src_matches[m_current_src_match];
 
 	if (path.is_empty())
 		return false;
@@ -476,7 +476,7 @@ bool sources_control::get_current_bitmap(rcptr_t<Bitmap> & p_bmp)
                 bitmap_file bmp;
                 res = bmp.get_gdiplus_bitmap_from_album_art_data(pic, p_bmp);
                 if (res == false) {
-                    string8 temp;
+                    pfc::string8 temp;
                     if (m_config.debug_log_sources)
                     {
                         temp.add_string("  File");
@@ -508,7 +508,7 @@ bool sources_control::get_current_bitmap(rcptr_t<Bitmap> & p_bmp)
         }
         else
         {
-            string8 temp;
+            pfc::string8 temp;
             if (m_config.debug_log_sources)
             {
                 temp.add_string("  File");
@@ -523,7 +523,7 @@ bool sources_control::get_current_bitmap(rcptr_t<Bitmap> & p_bmp)
         }
     }
     
-    string8 temp;
+    pfc::string8 temp;
     if (m_config.debug_log_sources)
     {
         temp.add_string("  File");
@@ -546,8 +546,8 @@ void sources_control::find_and_set_image(bool p_nocover)
 
 void sources_control::find_and_set_image(t_size p_start_source, bool p_nocover)
 {
-    list_t<string8> matches;
-    string8 pattern;
+    pfc::list_t<pfc::string8> matches;
+    pfc::string8 pattern;
     metadb_handle_ptr track;
 
     get_displayed_track(track);
@@ -559,7 +559,7 @@ void sources_control::find_and_set_image(t_size p_start_source, bool p_nocover)
     find_and_set_image_help(matches, found_source, pattern, track, start_source);
     m_current_source = found_source;
 
-    string8 prev_pattern;
+    pfc::string8 prev_pattern;
     if (m_pattern_history.get_last_pattern(prev_pattern))
     {
         if (stricmp_utf8(pattern, prev_pattern) == 0)
@@ -599,15 +599,15 @@ void sources_control::find_and_set_image(t_size p_start_source, bool p_nocover)
 // loops forward once through the source list, starting at p_start_source, searching for the
 // first match found.  This function will be called at least once for every call to
 // a find_and_set_image function
-void sources_control::find_and_set_image_help(list_t<string8> & p_matches_out, t_size & p_found_source,
-                                           string_base & p_pattern_out,
+void sources_control::find_and_set_image_help(pfc::list_t<pfc::string8> & p_matches_out, t_size & p_found_source,
+                                           pfc::string_base & p_pattern_out,
                                            metadb_handle_ptr p_track, t_size p_start_source)
 {
     t_size source_count = m_sources.get_count();
 
-    dynamic_assert((p_start_source < source_count) && (p_start_source >= 0));
+    pfc::dynamic_assert((p_start_source < source_count) && (p_start_source >= 0));
 
-    list_t<string8> matches;
+    pfc::list_t<pfc::string8> matches;
 
     t_size n;
     t_size source_index;
@@ -662,15 +662,15 @@ void sources_control::find_and_set_image_help(list_t<string8> & p_matches_out, t
 // compiles the source pattern at index p_source, formats the pattern using info from p_track, and
 // returns true if an image exists at that path.  p_matches_out will be filled with the paths of
 // all images that match the source pattern.
-bool sources_control::test_image_source(list_t<string8> & p_matches_out, string_base & p_pattern_out,
+bool sources_control::test_image_source(pfc::list_t<pfc::string8> & p_matches_out, pfc::string_base & p_pattern_out,
                                      metadb_handle_ptr p_track, t_size p_source)
 {
-    string8 pattern, file;
+    pfc::string8 pattern, file;
     static_api_ptr_t<titleformat_compiler> compiler;
     service_ptr_t<titleformat_object> pattern_obj;
 
     // for Columns UI global variables script
-    string8 globals, temp;
+    pfc::string8 globals, temp;
     service_ptr_t<titleformat_object> globals_obj;
     columns_ui::global_variable_list vars;
 
@@ -811,11 +811,11 @@ bool sources_control::test_image_source(list_t<string8> & p_matches_out, string_
     }
 }
 
-t_size sources_control::get_album_art_id (string_base & p_path, t_size & filename_len)
+t_size sources_control::get_album_art_id (pfc::string_base & p_path, t_size & filename_len)
 {
     t_size slash = p_path.find_last ('/');
     if (slash != ~0) {
-        string8 album_art_name = p_path.get_ptr () + slash + 1;
+        pfc::string8 album_art_name = p_path.get_ptr () + slash + 1;
         t_size img_index;
         for (img_index = 0; img_index < m_num_covers; img_index++) {
             if (m_cover_types[img_index] == album_art_name) {
@@ -832,7 +832,7 @@ void sources_control::on_node_select( const callback_node * node )
     if (node->get_entry_count() == 0)
         return;
 
-    list_t<metadb_handle_ptr> track_list;
+    pfc::list_t<metadb_handle_ptr> track_list;
     node->get_entries(track_list);
     if (track_list.get_count() == 0)
         return;
@@ -882,7 +882,7 @@ void sources_control::on_playlist_switch()
     focus_change_manual();
 }
 
-void sources_control::on_items_added(t_size start, const list_base_const_t<metadb_handle_ptr> & p_data,const pfc::bit_array & p_selection)
+void sources_control::on_items_added(t_size start, const pfc::list_base_const_t<metadb_handle_ptr> & p_data,const pfc::bit_array & p_selection)
 {
     focus_change_manual(start);
 }

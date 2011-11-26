@@ -20,7 +20,7 @@
 class multiline_string
 {
 protected:
-    list_t<string8> m_buffer;
+    pfc::list_t<pfc::string8> m_buffer;
     t_size m_cur_line;
 
 public:
@@ -28,7 +28,7 @@ public:
     multiline_string(const char * p_source) { set_string(p_source); }
 
     // would be nice to be able to use string_base instead...
-    multiline_string(list_t<string8> & p_source)
+    multiline_string(pfc::list_t<pfc::string8> & p_source)
     {
         m_buffer.remove_all();
         for (t_size n = 0; n < p_source.get_count(); n++)
@@ -40,7 +40,7 @@ public:
     // separated by CR and/or LF combinations
     void set_string(const char * p_source)
     {
-        string8 temp(p_source);
+        pfc::string8 temp(p_source);
         t_size eol;
 
         m_buffer.remove_all();
@@ -52,7 +52,7 @@ public:
             eol = temp.find_first('\r');
             if (eol != pfc_infinite)
             {
-                string8 line(temp.get_ptr(), eol);
+                pfc::string8 line(temp.get_ptr(), eol);
                 m_buffer.add_item(line);
 
                 // remove the line just read, including the
@@ -68,7 +68,7 @@ public:
                 eol = temp.find_first('\n');
                 if (eol != pfc_infinite)
                 {
-                    string8 line(temp.get_ptr(), eol);
+                    pfc::string8 line(temp.get_ptr(), eol);
                     m_buffer.add_item(line);
                     temp.remove_chars(0, eol + 1);
                 }
@@ -84,7 +84,7 @@ public:
     // outputs a string with each line terminated by a
     // CR/LF sequence.  The last line does not end with
     // a CR/LF.
-    void get_string(string_base & p_out) const
+    void get_string(pfc::string_base & p_out) const
     {
         p_out.reset();
         t_size num_strings = m_buffer.get_count();
@@ -105,12 +105,12 @@ public:
     void remove_line(t_size n = ~0) { if (n == ~0) n = m_cur_line; m_buffer.remove_by_idx(n); }
 
     // returns line at current cursor location if n is not specified
-    void get_line(string_base & p_out, t_size n = ~0) const { if (n == ~0) n = m_cur_line; p_out = m_buffer.get_item(n); }
+    void get_line(pfc::string_base & p_out, t_size n = ~0) const { if (n == ~0) n = m_cur_line; p_out = m_buffer.get_item(n); }
 
     // reads line at the current cursor location and advances
     // cursor to next line
     // returns false if the cursor is at end of string
-    bool read_line(string_base & p_out)
+    bool read_line(pfc::string_base & p_out)
     {
         if (is_cursor_valid())
         {
@@ -124,7 +124,7 @@ public:
         }
     }
 
-    inline const char * operator[](t_size n) const { string8 temp; get_line(temp, n); return temp.get_ptr(); }
+    inline const char * operator[](t_size n) const { pfc::string8 temp; get_line(temp, n); return temp.get_ptr(); }
 
     bool is_cursor_valid() { return ((m_cur_line != ~0) && (m_cur_line < m_buffer.get_count())); }
 

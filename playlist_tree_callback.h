@@ -70,7 +70,7 @@ public:
     }
 
 protected:
-    list_t<albumart_ns_callback*> m_callbacks;
+    pfc::list_t<albumart_ns_callback*> m_callbacks;
 };
 
 class albumart_node_select_callback_impl : public node_select_callback

@@ -11,7 +11,7 @@ struct t_custom_colors
 
     t_custom_colors()
     {
-        fill_array_t(m_table, RGB(255, 255, 255));
+        pfc::fill_array_t(m_table, RGB(255, 255, 255));
     }
 };
 
@@ -32,7 +32,7 @@ bool g_color_picker(HWND parent, COLORREF & p_value)
 //! @param [in] p_path already determind portion of the path, contains no wildcards
 //! @param [in] p_pattern pattern with wildcards, specifies path relative to p_path
 //! @param [in] p_process_all true to process all wildcard matches, false to stop at first match
-static void findFirstImageMatch_internal(list_t<string8> & p_path_out, const char * p_path,
+static void findFirstImageMatch_internal(pfc::list_t<pfc::string8> & p_path_out, const char * p_path,
                                          const char * p_pattern, bool p_process_all)
 {
 #ifdef _DEBUG
@@ -41,7 +41,7 @@ static void findFirstImageMatch_internal(list_t<string8> & p_path_out, const cha
 
     if(!wildcard_helper::has_wildcards(p_pattern))
     {
-        string8 fullpath;
+        pfc::string8 fullpath;
         fullpath << p_path;
         if (p_pattern[0] != 0)
         {
@@ -55,7 +55,7 @@ static void findFirstImageMatch_internal(list_t<string8> & p_path_out, const cha
         abort_callback_impl file_abort;
 
         // Check if the file has an image file extension
-        string_extension file_ext(fullpath);
+        pfc::string_extension file_ext(fullpath);
         if (pfc::string_find_first(image_exts, string_lower(file_ext.get_ptr())) == pfc_infinite)
             return;
 
@@ -89,18 +89,18 @@ static void findFirstImageMatch_internal(list_t<string8> & p_path_out, const cha
     // move next directory level(s) from p_pattern to p_path
 
     // position of first wildcard
-    t_size first_wildcard = min_t(
-        string_find_first(p_pattern, '*'),
-        string_find_first(p_pattern, '?'));
+    t_size first_wildcard = pfc::min_t(
+        pfc::string_find_first(p_pattern, '*'),
+        pfc::string_find_first(p_pattern, '?'));
 
     t_size pattern_length = strlen(p_pattern);
 
     // length of the prefix of path that "specifies a valid directory or path, 
     // and file name that can contain wildcard characters (* and ?)."
     // (see FindFirstFile in the Platform SDK)
-    t_size base_length = min_t(pattern_length, string_find_first(p_pattern, '\\', first_wildcard));
+    t_size base_length = pfc::min_t(pattern_length, pfc::string_find_first(p_pattern, '\\', first_wildcard));
 
-    string8 base_path;
+    pfc::string8 base_path;
     base_path.set_string(p_path);
     base_path.add_string(p_pattern, base_length);
 
@@ -111,7 +111,7 @@ static void findFirstImageMatch_internal(list_t<string8> & p_path_out, const cha
 #endif
 
     // pointer will be automatically deleted when 'find' goes out of scope
-    ptrholder_t<uFindFile> find = uFindFirstFile(base_path);
+    pfc::ptrholder_t<uFindFile> find = uFindFirstFile(base_path);
     if(find.is_empty())
     {
         return;
@@ -125,7 +125,7 @@ static void findFirstImageMatch_internal(list_t<string8> & p_path_out, const cha
         if(strcmp(find->GetFileName(), ".") != 0 && strcmp(find->GetFileName(), "..") !=0)
         {
             findFirstImageMatch_internal(p_path_out,
-                string8() << base_path << find->GetFileName(),
+                pfc::string8() << base_path << find->GetFileName(),
                 remaining_pattern, p_process_all);
 
             // if we've found a match and caller specified to stop here, then stop
@@ -136,27 +136,15 @@ static void findFirstImageMatch_internal(list_t<string8> & p_path_out, const cha
     while (find->FindNext());
 }
 
-class my_archive_callback : public archive_callback {
-public:
-	my_archive_callback() {}
-
-	bool on_entry(archive * owner,const char * url,const t_filestats & p_stats,const service_ptr_t<file> & p_reader)
-	{
-		return true;
-	}
-};
-
-static void findArchiveImageMatch_internal(list_t<string8> & p_path_out, const char * p_pattern, bool p_process_all)
+static void findArchiveImageMatch_internal(pfc::list_t<pfc::string8> & p_path_out, const char * p_pattern, bool p_process_all)
 {
-    string8 full_path, archive_path, file_path, file_out;
+    pfc::string8 full_path, archive_path, file_path, file_out;
     abort_callback_impl file_abort;
 
     filesystem::g_get_canonical_path(p_pattern, full_path);
 
-    t_size pipe_location = string_find_first(full_path, '|');
-
     archive_path = full_path;
-    archive_path.truncate(pipe_location);
+    archive_path.truncate(string_find_first(full_path, '|'));
 
     file_path = full_path;
     skip_prefix (file_path, archive_path);
@@ -164,46 +152,29 @@ static void findArchiveImageMatch_internal(list_t<string8> & p_path_out, const c
 
     if (wildcard_helper::has_wildcards (p_pattern))
 	{
-        try {
-		    unpack_7z::archive archive (archive_path, abort_callback_dummy ());
+        auto p_callback = [&] (archive * owner, const char * url, const t_filestats & p_stats, const file_ptr & p_reader) -> bool
+        {
+            if (wildcard_helper::test (url, file_path))
+                p_path_out.add_item (url);
+            return true;
+        };
 
-            archive.list ([&] (const pfc::string8 &item_path, const t_filestats) ->bool
-            {
-                if (wildcard_helper::test (item_path, file_path)) {
-                    archive_impl::g_make_unpack_path (file_out, archive_path, item_path, "7");
-                    p_path_out.add_item (file_out);
-                }
-                return true;
-            });
 
-        } catch (...) {}
-		
-		//	new service_impl_t<my_archive_callback>, true);
-    //    if (!C7Z::IsSupportedType (archive_type))
-    //        return;
-
-    //    c7z_open archive (archive_type);
-    //    file_ptr m_file;
-    //    pfc::string8_fastalloc m_url;
-
-    //    try {
-    //        filesystem::g_open (m_file, archive_path, filesystem::open_mode_read, file_abort);
-    //        archive.open_archive (m_file, file_abort);
-    //    }
-    //    catch (...) {
-    //        return;
-    //    }
-
-    //    t_size num_items = archive.files.get_size (), i;
-    //    for (i = 0; i < num_items; i++) {
-    //        if (wildcard_helper::test (archive.files[i].name, file_path)) {
-    //            archive_impl::g_make_unpack_path (file_out, archive_path, archive.files[i].name, archive_type);
-    //            p_path_out.add_item (file_out);
-    //        }
-    //    }
+		service_enum_t<filesystem> e;
+		service_ptr_t<filesystem> f;
+		while(e.next(f)) {
+			service_ptr_t<archive> arch;
+			if (f->service_query_t (arch)) {
+				try {
+					arch->archive_list (archive_path, file_ptr (), archive_callback_helper (p_callback), false);
+					return;
+				} catch(exception_aborted) {throw;} 
+				catch(...) {}
+			}
+		} 
     }
     else {
-       archive_impl::g_make_unpack_path(file_out, archive_path, file_path, string_extension(archive_path));
+       archive_impl::g_make_unpack_path(file_out, archive_path, file_path, pfc::string_extension(archive_path));
 
         try
         {
@@ -221,23 +192,23 @@ static void findArchiveImageMatch_internal(list_t<string8> & p_path_out, const c
     }
 }
 
-void findFirstImageMatch(list_t<string8> & p_path_out, const char * p_pattern, bool p_process_all)
+void findFirstImageMatch(pfc::list_t<pfc::string8> & p_path_out, const char * p_pattern, bool p_process_all)
 {
 #ifdef _DEBUG
     uDebugLog() << "image match:\n pattern = \"" << p_pattern << "\"";
 #endif
 
-    if (strcmp_partial(p_pattern, "http://") == 0)
+    if (pfc::strcmp_partial(p_pattern, "http://") == 0)
         return;
 
-    string8 pattern;
+    pfc::string8 pattern;
     fix_filename(pattern, p_pattern);
 
     // use the appropriate find function
     //   right now, archives are detected by searching for a '|' in the path,
     //   since the pipe is not a legal character for a filename.  Not sure
     //   if this is the best way to do it, though.
-    if (string_find_first(p_pattern, '|') == pfc_infinite)
+    if (pfc::string_find_first(p_pattern, '|') == pfc_infinite)
     {
         // Normal path
         findFirstImageMatch_internal(p_path_out, "", pattern, p_process_all);
@@ -249,8 +220,8 @@ void findFirstImageMatch(list_t<string8> & p_path_out, const char * p_pattern, b
             {
                 // append the current directory to the path and test again
                 // to allow for paths relative to components dir
-                string8 app_name(core_api::get_my_file_name());
-                string8 current_dir(core_api::get_my_full_path());
+                pfc::string8 app_name(core_api::get_my_file_name());
+                pfc::string8 current_dir(core_api::get_my_full_path());
                 current_dir.truncate(current_dir.length()-app_name.length()-strlen(".dll"));
 #ifdef _DEBUG
     uDebugLog() << " appending current dir: \"" << current_dir << "\"";
@@ -277,7 +248,7 @@ void findFirstImageMatch(list_t<string8> & p_path_out, const char * p_pattern, b
 //     backslash for the directory separator
 //   - GDI+ ignores trailing periods '.' in directory names
 //   - GDI+ and FindFirstFile ignore double-backslashes
-static void fix_filename(string8 & p_out, const char * p_path)
+static void fix_filename(pfc::string8 & p_out, const char * p_path)
 {
     p_out.set_string(p_path);
 
@@ -288,7 +259,7 @@ static void fix_filename(string8 & p_out, const char * p_path)
     p_out.replace_char('/', '\\');
 
     // fix double-backslashes and trailing periods in directory names
-    string8 temp(p_out);
+    pfc::string8 temp(p_out);
     t_size temp_len = temp.get_length();
     p_out.reset();
     p_out.add_byte(temp[0]);
@@ -313,9 +284,9 @@ static void fix_filename(string8 & p_out, const char * p_path)
 }
 
 
-bool skip_prefix(string8 & p_string, const char * p_prefix)
+bool skip_prefix(pfc::string8 & p_string, const char * p_prefix)
 {
-    if (strcmp_partial(p_string.get_ptr(), p_prefix) == 0)
+    if (pfc::strcmp_partial(p_string.get_ptr(), p_prefix) == 0)
     {
         p_string.remove_chars(0,strlen(p_prefix));
         return true;

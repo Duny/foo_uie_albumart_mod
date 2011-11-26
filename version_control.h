@@ -89,9 +89,9 @@ public:
     version_control(albumart_version p_version) { m_version = p_version; }
 
     void read_config(stream_reader * p_reader, t_size p_size, abort_callback & p_abort,
-                     albumart_vars & p_config, list_t<string8> & p_sources);
+                     albumart_vars & p_config, pfc::list_t<pfc::string8> & p_sources);
     void write_config(stream_writer * p_writer, abort_callback & p_abort,
-                      const albumart_vars & p_config, const list_t<string8> & p_sources) const;
+                      const albumart_vars & p_config, const pfc::list_t<pfc::string8> & p_sources) const;
 
 protected:
     unsigned m_version;

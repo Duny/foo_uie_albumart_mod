@@ -8,10 +8,10 @@ typedef HRESULT (CALLBACK* DIALOGTHEMEPROC)(HWND,DWORD);
 class edit_view
 {
 public:
-    bool run_edit_view(string8 & param,HWND parent);
+    bool run_edit_view(pfc::string8 & param,HWND parent);
     static INT_PTR WINAPI EditViewProc(HWND hWnd,UINT msg,WPARAM wp,LPARAM lp);
 private:
-    static void preview_string(string8 & p_out, string8 & p_in);
+    static void preview_string(pfc::string8 & p_out, pfc::string8 & p_in);
 };
 
 class command_select
@@ -23,7 +23,7 @@ public:
     INT_PTR WINAPI OnCommandSelectMessage(HWND hWnd, UINT msg, WPARAM wp, LPARAM lp);
 private:
     GUID * m_command_ptr;
-    list_t<GUID> m_commands;
+    pfc::list_t<GUID> m_commands;
 };
 
 class tab_entry
@@ -68,10 +68,10 @@ public:
 private:
     bool m_albumart_config_initialized;
     HWND m_hWnd;
-    list_t<tab_entry> m_tab_table;
+    pfc::list_t<tab_entry> m_tab_table;
     uie_albumart * m_parent;
     albumart_vars m_config;
-    list_t<string8> m_sources;
+    pfc::list_t<pfc::string8> m_sources;
     bool m_refreshing;
     bool m_dirty;
     unsigned int m_vars_changed;

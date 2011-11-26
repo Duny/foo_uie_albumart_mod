@@ -45,7 +45,7 @@ void uie_albumart::set_config(stream_reader * p_reader, t_size p_size, abort_cal
     reset_config_vars(m_config, m_sources);
 
     albumart_vars buf_config;
-    list_t<string8> buf_sources;
+    pfc::list_t<pfc::string8> buf_sources;
 
     version_control vc;
     vc.read_config(p_reader, p_size, p_abort, buf_config, buf_sources);
@@ -62,13 +62,13 @@ void uie_albumart::get_config(stream_writer * p_writer, abort_callback & p_abort
     vc.write_config(p_writer, p_abort, m_config, m_sources);
 }
 
-void uie_albumart::get_config_vars(albumart_vars & p_config, list_t<string8> & p_src_list)
+void uie_albumart::get_config_vars(albumart_vars & p_config, pfc::list_t<pfc::string8> & p_src_list)
 {
     p_config = m_config;
     p_src_list = m_sources;
 }
 
-void uie_albumart::set_config_vars(unsigned int change_type, albumart_vars & p_config, list_t<string8> & p_src_list)
+void uie_albumart::set_config_vars(unsigned int change_type, albumart_vars & p_config, pfc::list_t<pfc::string8> & p_src_list)
 {
     // update variables
     m_config = p_config;
@@ -375,7 +375,7 @@ private:
     bool * checked;
     uie_albumart * parent;
 public:
-    bool get_display_data(string_base & p_out,unsigned & p_state) const
+    bool get_display_data(pfc::string_base & p_out,unsigned & p_state) const
     {
         p_out = get_function_name(func_idx);
         if (checked != NULL && *checked)
@@ -384,7 +384,7 @@ public:
             p_state = 0;
         return true;
     }
-    bool get_description(string_base & p_out) const
+    bool get_description(pfc::string_base & p_out) const
     {
         return false;
     }
@@ -412,13 +412,13 @@ public:
         m_hWnd = wnd;
         m_parent = parent;
     }
-    bool get_display_data(string_base & p_out,unsigned & p_state) const
+    bool get_display_data(pfc::string_base & p_out,unsigned & p_state) const
     {
         p_out = "Preferences...";
         p_state = 0;
         return true;
     }
-    bool get_description(string_base & p_out) const
+    bool get_description(pfc::string_base & p_out) const
     {
         return false;
     }
@@ -492,7 +492,7 @@ void uie_albumart::click_func(mouse_function func)
 
 void uie_albumart::func_OpenEx()
 {
-    string8 path;
+    pfc::string8 path;
     m_sources_control.get_current_match(path);
     if (!path.is_empty())
         uShellExecute(0,"open",path,0,0,SW_SHOW);
@@ -503,7 +503,7 @@ void uie_albumart::func_OpenDir()
     metadb_handle_ptr track;
     if (m_sources_control.get_displayed_track(track))
     {
-        list_t<metadb_handle_ptr> list;
+        pfc::list_t<metadb_handle_ptr> list;
         list.add_item(track);
         standard_commands::context_file_open_directory(list);
     }
@@ -570,7 +570,7 @@ void uie_albumart::func_CopyName()
     }
 
     LPTSTR lptstrCopy = (LPTSTR)GlobalLock(hglbCopyMem);
-    stringcvt::string_wide_from_utf8 path_wide(m_path);
+    pfc::stringcvt::string_wide_from_utf8 path_wide(m_path);
     _tcscpy_s(lptstrCopy, len+1, path_wide);
     lptstrCopy[len] = 0;
     GlobalUnlock(hglbCopyMem);

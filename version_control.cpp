@@ -2,7 +2,7 @@
 
 // for now, p_config should be the most recent type of albumart_vars.  This may change in the future.
 void version_control::read_config(stream_reader * p_reader, t_size p_size, abort_callback & p_abort,
-                                  albumart_vars & p_config, list_t<string8> & p_sources)
+                                  albumart_vars & p_config, pfc::list_t<pfc::string8> & p_sources)
 {
     unsigned read_version;
 
@@ -43,7 +43,7 @@ void version_control::read_config(stream_reader * p_reader, t_size p_size, abort
                 p_sources.remove_all();
                 for (t_size n = 0; n < num_sources; n++)
                 {
-                    string8 temp;
+                    pfc::string8 temp;
                     p_reader->read_string(temp, p_abort);
                     p_sources.add_item(temp);
                 }
@@ -76,7 +76,7 @@ void version_control::read_config(stream_reader * p_reader, t_size p_size, abort
                 p_sources.remove_all();
                 for (t_size n = 0; n < num_sources; n++)
                 {
-                    string8 temp;
+                    pfc::string8 temp;
                     p_reader->read_string(temp, p_abort);
                     p_sources.add_item(temp);
                 }
@@ -106,7 +106,7 @@ void version_control::read_config(stream_reader * p_reader, t_size p_size, abort
 //   string in bytes (see declaration of p_writer::write_string)
 // * albumart_vars structure
 void version_control::write_config(stream_writer * p_writer, abort_callback & p_abort, 
-                                   const albumart_vars & p_config, const list_t<string8> & p_sources) const
+                                   const albumart_vars & p_config, const pfc::list_t<pfc::string8> & p_sources) const
 {
     int num_sources = p_sources.get_count();
 

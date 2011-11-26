@@ -7,7 +7,7 @@ class search_cache_entry
 {
 public:
     search_cache_entry() { m_pattern.reset(); m_matches.remove_all(); }
-    search_cache_entry(const char * p_pattern, list_t<string8> & p_matches)
+    search_cache_entry(const char * p_pattern, pfc::list_t<pfc::string8> & p_matches)
     {
         set_pattern(p_pattern);
         set_matches(p_matches);
@@ -16,12 +16,12 @@ public:
     void set_pattern(const char * p_pattern) { m_pattern.set_string(p_pattern); }
     const char * get_pattern() { return m_pattern.get_ptr(); }
 
-    void set_matches(list_t<string8> & p_in) { m_matches.remove_all(); m_matches.add_items(p_in); }
-    void get_matches(list_t<string8> & p_out) { p_out.add_items(m_matches); }
+    void set_matches(pfc::list_t<pfc::string8> & p_in) { m_matches.remove_all(); m_matches.add_items(p_in); }
+    void get_matches(pfc::list_t<pfc::string8> & p_out) { p_out.add_items(m_matches); }
 
 protected:
-    string8 m_pattern;
-    list_t<string8> m_matches;
+    pfc::string8 m_pattern;
+    pfc::list_t<pfc::string8> m_matches;
 };
 
 class search_cache
@@ -38,7 +38,7 @@ public:
 
     void remove_all() { m_buffer.remove_all(); }
 
-    void add_entry(const char * p_pattern, list_t<string8> & p_matches)
+    void add_entry(const char * p_pattern, pfc::list_t<pfc::string8> & p_matches)
     {
         if (m_max_items == 0)
             return;
@@ -76,7 +76,7 @@ public:
     }
 
     // False if there is no previous entry
-    bool get_last_pattern(string_base & p_out)
+    bool get_last_pattern(pfc::string_base & p_out)
     {
         t_size count = m_buffer.get_count();
         if (count == 0)
@@ -91,7 +91,7 @@ public:
     }
 
     // False if there is no previous entry
-    bool get_last_matches(list_t<string8> & p_out)
+    bool get_last_matches(pfc::list_t<pfc::string8> & p_out)
     {
         t_size count = m_buffer.get_count();
         if (count == 0)
@@ -104,7 +104,7 @@ public:
         }
     }
 
-    void get_pattern(t_size n, string_base & p_out)
+    void get_pattern(t_size n, pfc::string_base & p_out)
     {
         t_size count = m_buffer.get_count();
         if (count == 0)
@@ -115,7 +115,7 @@ public:
         p_out = m_buffer[n].get_pattern();
     }
 
-    void get_matches(t_size n, list_t<string8> & p_out)
+    void get_matches(t_size n, pfc::list_t<pfc::string8> & p_out)
     {
         t_size count = m_buffer.get_count();
         if (count == 0)
@@ -126,7 +126,7 @@ public:
         m_buffer[n].get_matches(p_out);
     }
 
-    bool get_matches(const char * p_pattern, list_t<string8> & p_out)
+    bool get_matches(const char * p_pattern, pfc::list_t<pfc::string8> & p_out)
     {
         t_size idx = find_entry(p_pattern);
         if (idx == pfc_infinite)
@@ -138,7 +138,7 @@ public:
 
 protected:
     t_size m_max_items;
-    list_t<search_cache_entry> m_buffer;
+    pfc::list_t<search_cache_entry> m_buffer;
 };
 
 class sources_control_callback
@@ -165,7 +165,7 @@ public:
 
     sources_control() { m_skip_no_covers = false; m_callback = NULL; }
     
-    void setup_sources_control(albumart_vars & p_config, list_t<string8> & p_sources);
+    void setup_sources_control(albumart_vars & p_config, pfc::list_t<pfc::string8> & p_sources);
 
     ~sources_control();
 
@@ -178,7 +178,7 @@ public:
     void clear_history();
     void set_max_history(bool p_enabled, t_size p_max);
 
-    void set_config_vars(albumart_vars & p_config, list_t<string8> p_sources)
+    void set_config_vars(albumart_vars & p_config, pfc::list_t<pfc::string8> p_sources)
     {
         m_config = p_config;
         m_sources = p_sources;
@@ -203,12 +203,12 @@ public:
     void set_skip_nocovers(bool p_skip) { m_skip_no_covers = p_skip; }
 
     // Used to query sources_control about the current search results
-    bool get_current_bitmap(rcptr_t<Bitmap> & p_bmp);
-    void get_current_match(string_base & p_out) { p_out = m_src_matches[m_current_src_match]; }
+    bool get_current_bitmap(pfc::rcptr_t<Bitmap> & p_bmp);
+    void get_current_match(pfc::string_base & p_out) { p_out = m_src_matches[m_current_src_match]; }
 
-    static const string8 m_embedded_image_search_pattern;
+    static const pfc::string8 m_embedded_image_search_pattern;
     static const GUID*   m_cover_ids[];
-    static const string8 m_cover_types[];
+    static const pfc::string8 m_cover_types[];
     static const t_size  m_num_covers;
 
     // playlist tree callback
@@ -229,7 +229,7 @@ public:
 
     // Playlist callbacks
     virtual void on_item_focus_change(t_size p_from,t_size p_to);
-    virtual void on_items_added(t_size start, const list_base_const_t<metadb_handle_ptr> & p_data,const pfc::bit_array & p_selection);
+    virtual void on_items_added(t_size start, const pfc::list_base_const_t<metadb_handle_ptr> & p_data,const pfc::bit_array & p_selection);
     virtual void on_items_removed(const pfc::bit_array & p_mask,t_size p_old_count,t_size p_new_count);
 
     virtual void on_items_reordered(const t_size * order,t_size count) {}
@@ -237,7 +237,7 @@ public:
     virtual void on_items_selection_change(const pfc::bit_array & p_affected,const pfc::bit_array & p_state) {}
     virtual void on_items_modified(const pfc::bit_array & p_mask) {}
     virtual void on_items_modified_fromplayback(const pfc::bit_array & p_mask,play_control::t_display_level p_level) {}
-    virtual void on_items_replaced(const pfc::bit_array & p_mask,const list_base_const_t<playlist_callback::t_on_items_replaced_entry> & p_data) {}
+    virtual void on_items_replaced(const pfc::bit_array & p_mask,const pfc::list_base_const_t<playlist_callback::t_on_items_replaced_entry> & p_data) {}
     virtual void on_item_ensure_visible(t_size p_idx) {}
 
     virtual void on_playlist_switch();
@@ -249,7 +249,7 @@ public:
     virtual void on_playback_order_changed(t_size p_new_index) {}
 
 protected:
-    t_size get_album_art_id (string_base & p_path, t_size & filename_len);
+    t_size get_album_art_id (pfc::string_base & p_path, t_size & filename_len);
 
     // functions that retrieve the index of the first source in a group
     t_size get_first_in_group(t_size p_start_source) const;
@@ -258,15 +258,15 @@ protected:
 
     t_size get_next_nocover(t_size p_start_source) const;
 
-    void set_matches(list_t<string8> & p_matches, const char * p_pattern, t_size p_index = 0);
+    void set_matches(pfc::list_t<pfc::string8> & p_matches, const char * p_pattern, t_size p_index = 0);
     void set_current_match(t_size p_index);
 
     // loops forward through the source list and finds the first matched source
     // p_path_out holds the path to the found image
-    void find_and_set_image_help(list_t<string8> & p_matches_out, t_size & p_found_source, string_base & p_pattern_out,
+    void find_and_set_image_help(pfc::list_t<pfc::string8> & p_matches_out, t_size & p_found_source, pfc::string_base & p_pattern_out,
                                  metadb_handle_ptr p_track, t_size p_start_source);
 
-    bool test_image_source(list_t<string8> & p_matches_out, string_base & p_pattern_out, metadb_handle_ptr p_track,
+    bool test_image_source(pfc::list_t<pfc::string8> & p_matches_out, pfc::string_base & p_pattern_out, metadb_handle_ptr p_track,
                            t_size p_source);
 
     void focus_change_manual();
@@ -274,11 +274,11 @@ protected:
     void track_change_manual();
 
     albumart_vars m_config;
-    list_t<string8> m_sources;
+    pfc::list_t<pfc::string8> m_sources;
     t_size m_current_source;
 
     // for cycling through multiple wildcard matches
-    list_t<string8> m_src_matches;
+    pfc::list_t<pfc::string8> m_src_matches;
     t_size m_current_src_match;
     search_cache m_pattern_history;
 
