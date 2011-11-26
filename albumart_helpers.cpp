@@ -1,7 +1,6 @@
 #include "stdafx.h"
 #include "bitmap_file.h"
 #include "albumart_helpers.h"
-#include "foo_unpack_7z_dll/archive.h"
 
 static const char * image_exts = "jpg;jpeg;gif;bmp;png;tif;tiff;ico;emf;wmf";
 

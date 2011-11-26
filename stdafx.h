@@ -11,11 +11,6 @@
 // Boost library
 #include "boost/function.hpp"
 
-// 7-zip includes
-#include "Common\MyInitGuid.h"
-#include "Common\MyCom.h"
-#include "7zip\Archive\IArchive.h"
-
 #include "afxres.H"
 
 #include <GdiPlus.h>
@@ -32,7 +27,6 @@ using namespace Gdiplus;
 #include "uie_albumart.h"
 #include "albumart_config.h"
 #include "multiline_string.h"
-//#include "albumart_embedded.h"
 #include "resource.h"
 
 #endif

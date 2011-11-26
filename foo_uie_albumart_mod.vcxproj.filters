@@ -13,12 +13,6 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
     </Filter>
-    <Filter Include="foo_unpack_7z_dll Files">
-      <UniqueIdentifier>{3802a19e-1381-4b05-8af3-99a4171f9ee2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="7z">
-      <UniqueIdentifier>{72ab40af-bf48-4120-80e7-05627e1e890d}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="albumart_config.cpp">
@@ -50,30 +44,6 @@
     </ClCompile>
     <ClCompile Include="win32_helpers.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="foo_unpack_7z_dll\archive.cpp">
-      <Filter>foo_unpack_7z_dll Files</Filter>
-    </ClCompile>
-    <ClCompile Include="foo_unpack_7z_dll\dll.cpp">
-      <Filter>foo_unpack_7z_dll Files</Filter>
-    </ClCompile>
-    <ClCompile Include="foo_unpack_7z_dll\file_streams.cpp">
-      <Filter>foo_unpack_7z_dll Files</Filter>
-    </ClCompile>
-	<ClCompile Include="$(SEVENZIPSRC)\CPP\Common\IntToString.cpp">
-      <Filter>7z</Filter>
-    </ClCompile>
-    <ClCompile Include="$(SEVENZIPSRC)\CPP\Common\MyString.cpp">
-      <Filter>7z</Filter>
-    </ClCompile>
-    <ClCompile Include="$(SEVENZIPSRC)\CPP\Windows\PropVariant.cpp">
-      <Filter>7z</Filter>
-    </ClCompile>
-    <ClCompile Include="$(SEVENZIPSRC)\CPP\Windows\PropVariantConversions.cpp">
-      <Filter>7z</Filter>
-    </ClCompile>
-    <ClCompile Include="$(SEVENZIPSRC)\CPP\Common\StringConvert.cpp">
-      <Filter>7z</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -116,21 +86,9 @@
     <ClInclude Include="playlist_tree_callback.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="foo_unpack_7z_dll\archive.h">
-      <Filter>foo_unpack_7z_dll Files</Filter>
-    </ClInclude>
-    <ClInclude Include="foo_unpack_7z_dll\dll.h">
-      <Filter>foo_unpack_7z_dll Files</Filter>
-    </ClInclude>
-    <ClInclude Include="foo_unpack_7z_dll\extract_callback.h">
-      <Filter>foo_unpack_7z_dll Files</Filter>
-    </ClInclude>
-    <ClInclude Include="foo_unpack_7z_dll\file_streams.h">
-      <Filter>foo_unpack_7z_dll Files</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="foo_uie_albumart.rc">
+    <ResourceCompile Include="foo_uie_albumart_mod.rc">
       <Filter>Resource Files</Filter>
     </ResourceCompile>
   </ItemGroup>
