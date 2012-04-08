@@ -206,7 +206,7 @@ public:
     bool get_current_bitmap(pfc::rcptr_t<Bitmap> & p_bmp);
     void get_current_match(pfc::string_base & p_out) { p_out = m_src_matches[m_current_src_match]; }
 
-    static const pfc::string8 m_embedded_image_search_pattern;
+    static const pfc::string8 m_source_embedded;
     static const GUID*   m_cover_ids[];
     static const pfc::string8 m_cover_types[];
     static const t_size  m_num_covers;

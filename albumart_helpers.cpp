@@ -294,13 +294,14 @@ bool skip_prefix(pfc::string8 & p_string, const char * p_prefix)
     return false;
 }
 
-bool get_extractor(album_art_extractor::ptr & out,const char * path, abort_callback & p_abort) {
+album_art_extractor::ptr get_extractor_for_file(const char * path) {
     service_enum_t<album_art_extractor> e;
+    album_art_extractor::ptr out;
 	pfc::string_extension ext(path);
-	while(e.next(out)) {
-		if (out->is_our_path(path,ext)) {
-            return true;
-		}
+
+	while (e.next (out)) {
+		if (out->is_our_path (path,ext))
+            return out;
 	}
-	return false;
+	return nullptr;
 }

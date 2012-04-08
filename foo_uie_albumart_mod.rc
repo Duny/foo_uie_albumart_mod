@@ -221,6 +221,7 @@ BEGIN
     GROUPBOX        "Sources for album cover art images",IDC_STATIC,7,7,294,125
     LISTBOX         IDC_List,16,22,276,72,LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
     LTEXT           "Double-click a source to edit it",IDC_STATIC,16,96,110,8
+	LTEXT           "Use [embedded] for embedded art",IDC_STATIC,185,96,120,8
     PUSHBUTTON      "Add",IDC_Add,16,110,44,14
     PUSHBUTTON      "Remove",IDC_Remove,67,110,50,14
     PUSHBUTTON      "Move Up",IDC_Up,124,110,59,14

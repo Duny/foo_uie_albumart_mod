@@ -1,6 +1,6 @@
 #include "stdafx.h"
 
-const pfc::string8 sources_control::m_embedded_image_search_pattern = "<embedded image>";
+const pfc::string8 sources_control::m_source_embedded= "[embedded]";
 
 const GUID* sources_control::m_cover_ids[] = { 
     &album_art_ids::cover_front,
@@ -119,7 +119,7 @@ int sources_control::get_display_mode() const
 
 //WigBaM's modified code
 // modified heavily by foosion:
-//   restructured loop and helper funtions
+//   restructured loop and helper functions
 // modified heavily by gfngfgf:
 //   takes advantage of helper functions
 t_size sources_control::next_source()
@@ -461,21 +461,21 @@ bool sources_control::get_current_bitmap(pfc::rcptr_t<Bitmap> & p_bmp)
         console::formatter() << "Loading album art: \"" << path << "\"";
 
     t_size len, img_id;
-    if ((img_id = get_album_art_id (path, len)) != ~0) {
-        abort_callback_impl p_abort;
-        album_art_extractor::ptr ptr;
-        
-        bool res = false;
-
+    if ((img_id = get_album_art_id (path, len)) != pfc_infinite) {
         path.truncate (len);
-        if (get_extractor (ptr, path, p_abort)) {
-            album_art_extractor_instance_ptr p_extractor;
+
+        album_art_extractor::ptr p_extractor = get_extractor_for_file (path);
+        if (p_extractor.is_valid ()) {
+            album_art_extractor_instance_ptr p_extractor_instance;
+            abort_callback_impl p_abort;
+
             try {
-                p_extractor = ptr->open (NULL, path, p_abort);
-                album_art_data_ptr pic = p_extractor->query (*m_cover_ids[img_id], p_abort);
+                p_extractor_instance = p_extractor->open (nullptr, path, p_abort);
+
+                album_art_data_ptr p_pic = p_extractor_instance->query (*m_cover_ids[img_id], p_abort);
+
                 bitmap_file bmp;
-                res = bmp.get_gdiplus_bitmap_from_album_art_data(pic, p_bmp);
-                if (res == false) {
+                if (!bmp.get_gdiplus_bitmap_from_album_art_data (p_pic, p_bmp)) {
                     pfc::string8 temp;
                     if (m_config.debug_log_sources)
                     {
@@ -492,11 +492,8 @@ bool sources_control::get_current_bitmap(pfc::rcptr_t<Bitmap> & p_bmp)
                 }
             }
             catch (...) { }
-
-            p_extractor.release ();
-            ptr.release ();
             
-            return res;
+            return p_bmp.is_valid ();
         }
     }
     else if (filesystem::g_exists(path, abort))
@@ -684,7 +681,7 @@ bool sources_control::test_image_source(pfc::list_t<pfc::string8> & p_matches_ou
     // for backwards compatibility
     skip_prefix(pattern, "match:");
 
-    if (pattern == m_embedded_image_search_pattern) {
+    if (pattern == m_source_embedded) {
         if (p_track.is_valid ()) {
             file = p_track->get_path ();
             file.add_string ("/*");
@@ -744,40 +741,33 @@ bool sources_control::test_image_source(pfc::list_t<pfc::string8> & p_matches_ou
     t_size history_idx = m_pattern_history.find_entry(file);
     if (history_idx == pfc_infinite)
     {
-        if (pattern == m_embedded_image_search_pattern) {
-            if (p_track.is_valid ()) {
-                album_art_extractor::ptr ptr;
-                abort_callback_impl p_abort;
-                
-                const char *path = p_track->get_path ();
-                if (get_extractor (ptr, path, p_abort)) {
-                    album_art_extractor_instance_ptr p_extractor;
+        // Embedded album art processing
+        if (pattern == m_source_embedded && p_track.is_valid ()) {
+            const char *path = p_track->get_path ();
+            album_art_extractor::ptr p_extractor = get_extractor_for_file (path);
 
-                    try {
-                        p_extractor = ptr->open (NULL, path, p_abort);
-                    }
-                    catch (...) {
-                        p_extractor = NULL;
-                    }
+            if (p_extractor.is_valid ()) {
+                album_art_extractor_instance_ptr p_extractor_instance;
+
+                try {
+                    p_extractor_instance = p_extractor->open (NULL, path, abort_callback_impl ());
+                }
+                catch (...) { }
                         
-                    if (p_extractor != NULL) {
-                        for (t_size i = 0; i < m_num_covers; i++) {
-                            try {
-                                album_art_data_ptr pic = p_extractor->query (*m_cover_ids[i], p_abort);
-                                pic.release ();
+                if (p_extractor_instance.is_valid ()) {
+                    abort_callback_impl p_abort;
+                    for (t_size i = 0; i < m_num_covers; i++) {
+                        try {
+                            album_art_data_ptr pic = p_extractor_instance->query (*m_cover_ids[i], p_abort);
 
-                                temp.reset ();
-                                temp.add_string (p_track->get_path ());
-                                temp.add_char ('/');
-                                temp += m_cover_types[i];
-                                console::formatter() << temp << "\n";
-                                p_matches_out.add_item (temp);
-                            }
-                            catch (...) { }
+                            pfc::string8 temp = path;
+                            temp.add_char ('/');
+                            temp.add_string (m_cover_types[i]);
+
+                            p_matches_out.add_item (temp);
                         }
-                        p_extractor.release ();
+                        catch (...) { }
                     }
-                    ptr.release ();
                 }
             }
         }
@@ -786,9 +776,7 @@ bool sources_control::test_image_source(pfc::list_t<pfc::string8> & p_matches_ou
 
         if (m_config.debug_log_sources)
         {
-            char count[10];
-            _itoa_s(p_matches_out.get_count(), count, 10, 10);
-            console::formatter() << "  " << count << " match(es) found";
+            console::formatter() << "  " << p_matches_out.get_count() << " match(es) found";
         }
     }
     else
@@ -814,7 +802,7 @@ bool sources_control::test_image_source(pfc::list_t<pfc::string8> & p_matches_ou
 t_size sources_control::get_album_art_id (pfc::string_base & p_path, t_size & filename_len)
 {
     t_size slash = p_path.find_last ('/');
-    if (slash != ~0) {
+    if (slash != pfc_infinite) {
         pfc::string8 album_art_name = p_path.get_ptr () + slash + 1;
         t_size img_index;
         for (img_index = 0; img_index < m_num_covers; img_index++) {
@@ -824,7 +812,7 @@ t_size sources_control::get_album_art_id (pfc::string_base & p_path, t_size & fi
             }
         }
     }
-    return ~0;
+    return pfc_infinite;
 }
 
 void sources_control::on_node_select( const callback_node * node )

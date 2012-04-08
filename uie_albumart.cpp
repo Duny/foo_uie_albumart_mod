@@ -2,13 +2,13 @@
 
 DECLARE_COMPONENT_VERSION(
     "Album Art Panel",
-    "0.2.7",
+    "0.2.8",
     "A Columns UI extension by Nathan Kallus.\n"
     "Modified by David L to fix redrawing issues and add animation\n"
     "Ported to foobar2000 0.9 by G-Lite\n"
     "Various changes including code clean-up and preferences redesign by Holger Stenger\n"
     "Several bug fixes and feature additions by Cheran Shunmugavel\n"
-    "Ported to foobar2000 1.0 by Major(Duny). Implemented extracting album art from archives and various tags formats read/write\n"
+    "Ported to foobar2000 1.0 by Efimenko Dmitriy (Duny). Implemented extracting album art from archives and embedded alnum art\n"
     "\ncompiled: " __DATE__ "\n"
     "with Panel API version: " UI_EXTENSION_VERSION)
 
