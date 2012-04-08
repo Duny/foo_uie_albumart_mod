@@ -1,2 +1,2 @@
-This a foobar2000 component, modification of foo_uie_albumart;
-foo_uie_albumart_mod adds support for embed album art as well as extracting album art from archives.
+This is a modification of foo_uie_albumart component for foobar2000 
+with embedded album art support and support for searching album art in archives.
