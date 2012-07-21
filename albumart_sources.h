@@ -61,6 +61,13 @@ public:
         }
     }
 
+    void remove_entry(const char * p_pattern)
+    {
+        t_size idx = find_entry(p_pattern);
+        if (pfc_infinite != idx)
+            m_buffer.remove_by_idx(idx);
+    }
+
     t_size find_entry(const char * p_pattern)
     {
         for (t_size n=0; n<m_buffer.get_count(); n++)
@@ -206,11 +213,6 @@ public:
     bool get_current_bitmap(pfc::rcptr_t<Bitmap> & p_bmp);
     void get_current_match(pfc::string_base & p_out) { p_out = m_src_matches[m_current_src_match]; }
 
-    static const pfc::string8 m_source_embedded;
-    static const GUID*   m_cover_ids[];
-    static const pfc::string8 m_cover_types[];
-    static const t_size  m_num_covers;
-
     // playlist tree callback
     virtual void on_node_select(const callback_node * p_node);
 
@@ -249,8 +251,6 @@ public:
     virtual void on_playback_order_changed(t_size p_new_index) {}
 
 protected:
-    t_size get_album_art_id (pfc::string_base & p_path, t_size & filename_len);
-
     // functions that retrieve the index of the first source in a group
     t_size get_first_in_group(t_size p_start_source) const;
     t_size get_next_group(t_size p_start_source) const;
@@ -287,6 +287,8 @@ protected:
     bool m_skip_no_covers;
 
     sources_control_callback * m_callback;
+
+    pfc::map_t<pfc::string8, t_filestats> map_file_stats;
 };
 
 #endif

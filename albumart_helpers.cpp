@@ -167,7 +167,7 @@ static void findArchiveImageMatch_internal(pfc::list_t<pfc::string8> & p_path_ou
 			service_ptr_t<archive> arch;
 			if (f->service_query_t (arch)) {
 				try {
-					arch->archive_list (archive_path, file_ptr (), archive_callback_helper (p_callback), false);
+					arch->archive_list (archive_path, nullptr, archive_callback_helper (p_callback), false);
 					return;
 				} catch (...) {}
 			}
@@ -294,7 +294,7 @@ bool skip_prefix(pfc::string8 & p_string, const char * p_prefix)
     return false;
 }
 
-album_art_extractor::ptr get_extractor_for_file(const char * path) {
+album_art_extractor::ptr get_extractor_for_path(const char * path) {
     service_enum_t<album_art_extractor> e;
     album_art_extractor::ptr out;
 	pfc::string_extension ext(path);

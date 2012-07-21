@@ -8,7 +8,7 @@ DECLARE_COMPONENT_VERSION(
     "Ported to foobar2000 0.9 by G-Lite\n"
     "Various changes including code clean-up and preferences redesign by Holger Stenger\n"
     "Several bug fixes and feature additions by Cheran Shunmugavel\n"
-    "Ported to foobar2000 1.0 by Efimenko Dmitriy (Duny). Implemented extracting album art from archives and embedded alnum art\n"
+    "Ported to foobar2000 1.0 by Efimenko Dmitry (Duny). Implemented extracting album art from archives and embedded album art\n"
     "\ncompiled: " __DATE__ "\n"
     "with Panel API version: " UI_EXTENSION_VERSION)
 

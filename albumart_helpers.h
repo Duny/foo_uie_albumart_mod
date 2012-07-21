@@ -9,9 +9,11 @@ void fix_filename(pfc::string8 & p_out, const char * p_path);
 
 bool skip_prefix(pfc::string8 & p_string, const char * p_prefix);
 
-album_art_extractor::ptr get_extractor_for_file(const char * path);
+album_art_extractor::ptr get_extractor_for_path(const char * path);
 
+// For archive listing
 typedef boost::function<bool (archive * owner, const char * url, const t_filestats & p_stats, const file_ptr & p_reader)> archive_callback_func;
+
 class archive_callback_helper : public archive_callback
 {
     archive_callback_func m_func;
