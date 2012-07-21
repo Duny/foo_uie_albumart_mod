@@ -778,13 +778,64 @@ bool sources_control::test_image_source(pfc::list_t<pfc::string8> & p_matches_ou
     // only perform the image search if the pattern is not in the history
     t_size history_idx = m_pattern_history.find_entry(file);
 
-    // check file stats for embedded image pattern
-    // so we handle file updates
-    if (history_idx != pfc_infinite && pattern_is_embedded_image && map_file_stats.have_item(file))
+    // try to determinate type of pattern object
+    pfc::string8 object_type = file;
+    
+    if (pattern_is_embedded_image && p_track.is_valid()) // is it embedded image ?
+         object_type = p_track->get_path (); // p_track
+    else
     {
-        if (p_track.is_valid() && p_track->get_filestats() != map_file_stats[file])
+        pfc::string8 file_to_try;
         {
-            // force image search
+            // try archive file name
+            t_size pipe_index = file.find_first ('|');
+            if (pipe_index != pfc_infinite)
+            {
+                pfc::string8 archive = file;
+                archive.truncate(pipe_index);
+                object_type = archive;
+            }
+            else
+            {
+                // try directory path
+                t_size slash_index = file.find_last ('\\');
+                if (pfc_infinite != file.find_last ('\\')) 
+                {
+                    pfc::string8 dir = file;
+                    dir.truncate(slash_index + 1);
+                    object_type = dir;
+                }
+            }
+        }
+    }
+
+    // check file stats change
+    // so we handle file updates (for archives, directories and embedded)
+    if (history_idx != pfc_infinite && map_file_stats.have_item(object_type))
+    {
+        abort_callback_impl p_abort;
+
+        t_filestats prev_stats = map_file_stats[object_type];
+        t_filestats curr_stats = filestats_invalid;
+
+        try
+        {
+            // get current object file stats
+            if (object_type.length() != 0 && filesystem::g_exists(object_type, p_abort))
+            {
+                bool dummy;
+                filesystem::g_get_stats(object_type, curr_stats, dummy, p_abort);
+            }
+        }
+        catch(...)
+        {
+            curr_stats = filestats_invalid;
+        }
+
+        if (curr_stats != filestats_invalid && prev_stats != curr_stats)
+        {
+            // pattern object has been updated
+            // force image re-search
             m_pattern_history.remove_entry(file);
             map_file_stats.remove(file);
             history_idx = pfc_infinite;
@@ -817,12 +868,6 @@ bool sources_control::test_image_source(pfc::list_t<pfc::string8> & p_matches_ou
                     }
                 }
                 catch (...) { }
-
-                if (p_matches_out.get_count () > 0)
-                {
-                    // Save current file stats
-                    map_file_stats[file] = p_track->get_filestats ();
-                }
             }
         }
         else
@@ -831,6 +876,25 @@ bool sources_control::test_image_source(pfc::list_t<pfc::string8> & p_matches_ou
         if (m_config.debug_log_sources)
         {
             console::formatter() << "  " << p_matches_out.get_count() << " match(es) found";
+        }
+
+        if (p_matches_out.get_count () != 0)
+        {
+            try
+            {
+                abort_callback_impl p_abort;
+
+                if (object_type.length() != 0 && filesystem::g_exists(object_type, p_abort))
+                {
+                    bool dummy;
+                    t_filestats stats = filestats_invalid;
+
+                    filesystem::g_get_stats(object_type, stats, dummy, p_abort);
+                    map_file_stats[object_type] = stats;
+                }
+            }
+            catch(...)
+            {}
         }
     }
     else

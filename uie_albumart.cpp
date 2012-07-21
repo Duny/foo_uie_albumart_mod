@@ -2,7 +2,7 @@
 
 DECLARE_COMPONENT_VERSION(
     "Album Art Panel",
-    "0.2.8",
+    "0.2.9",
     "A Columns UI extension by Nathan Kallus.\n"
     "Modified by David L to fix redrawing issues and add animation\n"
     "Ported to foobar2000 0.9 by G-Lite\n"
@@ -52,7 +52,7 @@ void uie_albumart::set_config(stream_reader * p_reader, t_size p_size, abort_cal
 
     m_config = buf_config;
     m_sources = buf_sources;
-    
+
     m_sources_control.set_config_vars(m_config, m_sources);
 }
 
@@ -165,7 +165,7 @@ void uie_albumart::destroy_window()
 LRESULT WINAPI uie_albumart::host_proc(HWND wnd1,UINT msg,WPARAM wp,LPARAM lp)
 {
     uie_albumart * p_this;
-    
+
     if(msg == WM_NCCREATE)
     {
         p_this = (uie_albumart *)((CREATESTRUCT *)(lp))->lpCreateParams; //retrieve pointer to class
@@ -441,7 +441,7 @@ void uie_albumart::get_menu_items (uie::menu_hook_t & p_hook)
             item = new albumart_menu_functions(i, this);
         p_hook.add_node(item);
     }
-    
+
     item = new uie::menu_node_separator_t();
     p_hook.add_node(item);
     item = new albumart_menu_preferences(m_hWnd, this);
@@ -662,7 +662,7 @@ void uie_albumart::paint(HDC hdc)
                 m_bufanim.release();
             else if (m_bufanim.is_empty())
                 m_bufanim=new Bitmap(wndrect.Width,wndrect.Height,&gfx);
-            
+
             m_config_changed = false;
 
             Bitmap *temp = m_bufold.detach();
@@ -845,7 +845,7 @@ void uie_albumart::paint(HDC hdc)
                 bufgfx.SetClip(wndrect);    // ensures that padding is respected
                 bufgfx.DrawImage(
                     &(*m_bmpnew),
-                    rect,         // destination rectangle 
+                    rect,         // destination rectangle
                     srcX, srcY,   // upper-left corner of source rectangle
                     srcWidth,     // width of source rectangle
                     srcHeight,    // height of source rectangle
@@ -898,7 +898,7 @@ void uie_albumart::paint(HDC hdc)
                 cm.m[1][1] = 1.0f;
                 cm.m[2][2] = 1.0f;
                 cm.m[3][3] = opacityold;
-                
+
                 ImageAttributes ia;
                 ia.SetColorMatrix(&cm);
                 animbuf.DrawImage(m_bufold.get_ptr(),dest,0,0,dest.Width,dest.Height,UnitPixel,&ia);
