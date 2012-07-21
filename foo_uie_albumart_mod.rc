@@ -27,18 +27,18 @@ LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
 // TEXTINCLUDE
 //
 
-1 TEXTINCLUDE 
+1 TEXTINCLUDE
 BEGIN
     "resource.h\0"
 END
 
-2 TEXTINCLUDE 
+2 TEXTINCLUDE
 BEGIN
     "#include ""afxres.h""\r\n"
     "\0"
 END
 
-3 TEXTINCLUDE 
+3 TEXTINCLUDE
 BEGIN
     "\r\n"
     "\0"
@@ -249,6 +249,44 @@ END
 /////////////////////////////////////////////////////////////////////////////
 
 
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 0,2,9,0
+ PRODUCTVERSION 0,2,9,0
+ FILEFLAGSMASK 0x17L
+#ifdef _DEBUG
+ FILEFLAGS 0x5L
+#else
+ FILEFLAGS 0x4L
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x2L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "041904b0"
+        BEGIN
+            VALUE "Comments", "Columns UI panel with artwork"
+            VALUE "CompanyName", "Duny"
+            VALUE "FileDescription", "foo_uie_album_art modification"
+            VALUE "FileVersion", "0.2.9.0"
+            VALUE "InternalName", "foo_uie_album_art_mod.dll"
+            VALUE "LegalCopyright", "© 2010-2012 Efimenko Dmitry"
+            VALUE "OriginalFilename", "foo_uie_album_art.dll"
+            VALUE "ProductName", "foo_uie_album_art modification"
+            VALUE "ProductVersion", "0.2.9.0"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x419, 1200
+    END
+END
 
 #ifndef APSTUDIO_INVOKED
 /////////////////////////////////////////////////////////////////////////////
