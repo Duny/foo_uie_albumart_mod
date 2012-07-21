@@ -271,14 +271,13 @@ BEGIN
     BEGIN
         BLOCK "041904b0"
         BEGIN
-            VALUE "Comments", "Columns UI panel with artwork"
-            VALUE "CompanyName", "Duny"
-            VALUE "FileDescription", "foo_uie_album_art modification"
+            VALUE "Comments", "Columns UI panel with album artwork. It supports reading images from archives & embedded artwork."
+            VALUE "FileDescription", "foo_uie_albumart modification."
             VALUE "FileVersion", "0.2.9.0"
-            VALUE "InternalName", "foo_uie_album_art_mod.dll"
-            VALUE "LegalCopyright", "© 2010-2012 Efimenko Dmitry"
-            VALUE "OriginalFilename", "foo_uie_album_art.dll"
-            VALUE "ProductName", "foo_uie_album_art modification"
+            VALUE "InternalName", "foo_uie_albumart_mod.dll"
+            VALUE "LegalCopyright", "© 2010-2012 Efimenko Dmitry (majorquake3@gmail.com)"
+            VALUE "OriginalFilename", "foo_uie_albumart.dll"
+            VALUE "ProductName", "foo_uie_albumart_mod"
             VALUE "ProductVersion", "0.2.9.0"
         END
     END
